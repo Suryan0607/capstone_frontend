@@ -20,20 +20,22 @@ const StuDashBoard = () => {
 
  const [queryData, setQueryData] = useState({});
 
-  const studentData = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/student/${params.id}/allQuery`
-      );
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  
 
   useEffect(() => {
-    studentData();
+    if(params.id){
+    const studentData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/student/${params.id}/allQuery`
+        );
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    studentData()
+  }
   }, [params]);
 
   

@@ -23,28 +23,26 @@ const QueryCard = () => {
 
   const [queryId, setQueryId] = useState("");
 
-  useEffect(() => {
+  
 
-    studentData();
-
-  }, [params,status]);
-
+useEffect(() => {
+if(params.id){
   const studentData = async () => {
-
     try {
-
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/mentor/${params.studentId}/allQuery`
       );
 
       setData(response.data);
-
     } catch (error) {
-
       console.log(error);
-
     }
   };
+  studentData();
+}
+  }, [params,status]);
+
+  
 
   const getQuery = async (id) => {
 

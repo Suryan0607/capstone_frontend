@@ -25,37 +25,36 @@ const Profile = () => {
 
 
 
+ 
+
   useEffect(() => {
-     getProfile()
-  }, [params]);
+    if(params.id){
+      const getProfile = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/user/${params.id}`
+          );
+          if (response) {
+            return setInitialValues(response.data.user);
+          } else {
+            const notify = () =>
+              toast.error(`Network Error....`, { theme: "colored" });
+            notify();
+          }
+        } catch (error) {
+          if (error) {
+            const notify = () =>
+              toast.error(`User Doesn't Exist...or`, { theme: "colored" });
+            notify();
+          }
+        }
+      };
+       getProfile();
+    }
+  },[params]);
 
   
 
-const getProfile= async()=>{
-try{
-    const response = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/user/${params.id}`
-    );
-    if(response){
-       return setInitialValues(
-       response.data.user
-       );
-    }
-    else{
-      const notify = () =>
-        toast.error(`Network Error....`, { theme: "colored" });
-      notify();
-    }
-    
-}catch(error){
-     if (error) {
-      const notify = () =>
-        toast.error(`User Doesn't Exist...or`, { theme: "colored" });
-      notify();
-     }
-}
-}
- 
 
 
   const validationSchema = Yup.object().shape({
